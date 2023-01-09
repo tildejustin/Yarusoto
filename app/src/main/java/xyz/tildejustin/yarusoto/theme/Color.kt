@@ -1,4 +1,4 @@
-package xyz.tildejustin.yarusoto.ui.theme
+package xyz.tildejustin.yarusoto.theme
 
 import androidx.compose.ui.graphics.Color
 

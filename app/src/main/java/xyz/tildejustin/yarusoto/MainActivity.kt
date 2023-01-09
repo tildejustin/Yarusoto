@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import xyz.tildejustin.yarusoto.ui.theme.YarusotoTheme
+import xyz.tildejustin.yarusoto.theme.YarusotoTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,71 +152,3 @@ fun MainPreview() {
         )
     }
 }
-
-
-
-//@Preview(name = "Dark Mode", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Preview(name = "Full Preview", showSystemUi = true, showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-//@Composable
-//fun DefaultPreview() {
-//    val todos = remember { mutableStateListOf(TodoItem("first"), TodoItem("second"), TodoItem("third", checked = true)) }
-//    TodoListTheme {
-//
-//        Scaffold(
-//            topBar = { SmallTopAppBar(title = { Text("To-dos") }) },
-//            floatingActionButton = {
-//                ExtendedFloatingActionButton(
-//                    onClick = {},
-//                    text = { Text(text = "Add To-do") },
-//                    icon = {
-//                        Icon(
-//                            imageVector = Icons.Rounded.Create,
-//                            null
-//                        )
-//                    },
-//                containerColor = MaterialTheme.colorScheme.primary
-//                )
-//            },
-//            floatingActionButtonPosition = FabPosition.End,
-//            containerColor = MaterialTheme.colorScheme.background,
-//            content = ({ TodoListDisplay(todos) })
-//        )
-//    }
-//}
-//
-//@Composable
-//fun TodoListDisplay(todos: List<TodoItem>) {
-//    println(todos)
-//    Column {
-//        if (todos.isEmpty()) {
-//            Text("No Todos! :partying_face:")
-//        } else {
-//            todos.forEach { todo ->
-//                TodoDisplay(todo)
-//            }
-//        }
-//    }
-//}
-//
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun TodoDisplay(todo: TodoItem) {
-//    val checked = remember { mutableStateOf(todo.checked) }
-//    Row {
-//        Checkbox(
-//            checked = checked.value,
-//            onCheckedChange = {
-//                checked.value = it
-//            }
-//        )
-//        Text(
-//            todo.name
-//        )
-////        Divider()
-//        println("com.example.todo: " + todo.checked)
-//    }
-//}
-
-
-
