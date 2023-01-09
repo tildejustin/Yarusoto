@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
@@ -44,7 +46,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainPreview() {
-    var todoList = remember { mutableStateListOf<TodoItem>() }
+    val todoList = remember { mutableStateListOf<TodoItem>() }
     var dialogState by remember { mutableStateOf(false) }
     var dialogText by remember { mutableStateOf("") }
     Scaffold(
@@ -61,6 +63,7 @@ fun MainPreview() {
         containerColor = MaterialTheme.colorScheme.background,
     ) { padding ->
         var showChecked by remember { mutableStateOf(false) }
+        val todoScrollState = rememberScrollState()
 //        val todoList = if (!showChecked) {
 //            todoDisplay.filter { todo -> !todo.checked }
 //        } else {
@@ -77,8 +80,9 @@ fun MainPreview() {
                     })
             }
             Divider()
-            if (todoList.isEmpty()) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxSize()) {
+            if ((!showChecked and todoList.none { todo -> !todo.checked }) or (showChecked and todoList.isEmpty()) ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier
+                    .fillMaxSize()) {
                     Text("No To-dos!", fontSize = 20.sp)
                     Text(
                         "\uD83E\uDD73",
@@ -90,19 +94,27 @@ fun MainPreview() {
                     )
                 }
             } else {
-                todoList.forEachIndexed { index, todo ->
+//                technically scrollable :p
+                Column(modifier = Modifier.verticalScroll(todoScrollState)) {
+                    for (i in 0 until todoList.size) {
 //                    val (checkState, setCheckState) = remember { mutableStateOf(todo.checked) }
-                        Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Checkbox(checked = todo.checked, onCheckedChange = { todo.checked = it })
-                            Text(text = todo.name)
+                        if (showChecked or !todoList[i].checked) {
+                            Row(
+                                Modifier.padding(horizontal = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Checkbox(
+                                    checked = todoList[i].checked,
+                                    onCheckedChange = { todoList[i] = todoList[i].copy(checked = it) })
+                                Text(text = todoList[i].name)
+                            }
                         }
-                    SideEffect {
-//                        todo.checked = checkState
                     }
                 }
             }
         }
     }
+
     if (dialogState) {
         AlertDialog(
             onDismissRequest = { dialogState = false },
